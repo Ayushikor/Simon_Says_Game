@@ -1,5 +1,5 @@
-let gameSeq=[];
-let userSeq=[];
+let gameSeq = [];
+let userSeq = [];
 
 let btns = ["yellow", "red", "purple", "green"];
 
@@ -8,7 +8,7 @@ let level = 0;
 
 let h2 = document.querySelector("h2");
 
-document.addEventListener("keypress" , function () {
+document.addEventListener("keypress", function () {
     if (started == false) {
         console.log("game is started");
         started = true;
@@ -19,14 +19,14 @@ document.addEventListener("keypress" , function () {
 
 function gameFlash(btn) {
     btn.classList.add("flash");
-    setTimeout(function() {
+    setTimeout(function () {
         btn.classList.remove("flash");
     }, 250);
 }
 
 function userFlash(btn) {
     btn.classList.add("userflash");
-    setTimeout(function() {
+    setTimeout(function () {
         btn.classList.remove("userflash");
     }, 250);
 }
@@ -35,49 +35,56 @@ function levelUp() {
     userSeq = [];
     level++;
     h2.innerText = `Level ${level}`;
-    
-    //random btn choose
-    let ranInx = Math.floor(Math.random() * 3);
+
+    // Random button selection
+    let ranInx = Math.floor(Math.random() * btns.length);
     let randColor = btns[ranInx];
     let randbtn = document.querySelector(`.${randColor}`);
-    // console.log(ranInx);
-    // console.log(randColor);
-    // console.log(randbtn);
+
     gameSeq.push(randColor);
     console.log(gameSeq);
+
     gameFlash(randbtn);
 }
 
 function checkAns(idx) {
-    
 
-    if(userSeq[idx] === gameSeq[idx]) {
+    if (userSeq[idx] === gameSeq[idx]) {
+
         if (userSeq.length == gameSeq.length) {
             setTimeout(levelUp, 1000);
         }
+
     } else {
-        h2.innerHTML = `Game Over! Your score was <b> ${level}</b> <br> Press any key to start.`;
+
+        h2.innerHTML = `Game Over! Your score was <b>${level}</b> <br> Press any key to start.`;
+
         document.querySelector("body").style.background = "red";
-        setTimeout(function() {
+
+        setTimeout(function () {
             document.querySelector("body").style.background = "white";
         }, 150);
+
         reset();
     }
 }
 
 function btnPress() {
-    
+
     let btn = this;
+
     userFlash(btn);
 
-    userColor = btn.getAttribute("id");
+    let userColor = btn.getAttribute("id");
+
     userSeq.push(userColor);
 
-    checkAns(userSeq.length-1);
+    checkAns(userSeq.length - 1);
 }
 
 let allBtns = document.querySelectorAll(".btn");
-for (btn of allBtns) {
+
+for (let btn of allBtns) {
     btn.addEventListener("click", btnPress);
 }
 
@@ -87,3 +94,29 @@ function reset() {
     userSeq = [];
     level = 0;
 }
+
+/* ==========================
+      DARK MODE
+========================== */
+
+let themeBtn = document.querySelector("#theme-btn");
+
+// Load saved theme
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    themeBtn.innerText = "☀️ Light Mode";
+}
+
+themeBtn.addEventListener("click", function () {
+
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        themeBtn.innerText = "☀️ Light Mode";
+    } else {
+        localStorage.setItem("theme", "light");
+        themeBtn.innerText = "🌙 Dark Mode";
+    }
+
+});

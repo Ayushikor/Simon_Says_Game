@@ -43,3 +43,43 @@ body {
 .userflash {
     background-color: rgb(89, 241, 89);
 }
+
+/* ---------- Dark Mode ---------- */
+
+#theme-btn{
+    position:absolute;
+    top:20px;
+    right:20px;
+    padding:10px 18px;
+    font-size:16px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#222;
+    color:white;
+    transition:.3s;
+}
+
+#theme-btn:hover{
+    transform:scale(1.05);
+}
+
+body{
+    background:white;
+    color:black;
+    transition:0.3s;
+}
+
+body.dark{
+    background:#121212;
+    color:white;
+}
+
+body.dark h1,
+body.dark h2{
+    color:white;
+}
+
+body.dark .btn{
+    border:5px solid white;
+}
